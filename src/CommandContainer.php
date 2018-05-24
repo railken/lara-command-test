@@ -2,45 +2,43 @@
 
 namespace Railken\LaraCommandTest;
 
+use Roave\BetterReflection\BetterReflection;
+
 class CommandContainer
 {	
 	/**
-	 * @var string 
-	 */
-	protected $command;
-
-	/**
 	 * @var array
 	 */
-	protected $input;
+	protected $original;
 
 	/**
-	 * @param string $class_command
+	 * @var string
 	 */
-	public function __construct(string $command)
+	protected $testable;
+
+	/**
+	 * @param string $original
+	 * @param string $testable
+	 */
+	public function __construct(string $original, string $testable)
 	{
-		$this->command = $command;
+		$this->original = $original;
+		$this->testable = $testable;
 	}
 
 	/**
-	 * @param array $input
-	 * 
-	 * @return $this
-	 */
-	public function withInput(array $input)
-	{
-		$this->input = $input;
-	
-		return $this;
-	}
-
-	/**
-	 * Handle the command creating a new one that handle input.
-	 *
 	 * @return string
 	 */
-	public function handle()
+	public function getTestable()
 	{
-		return $this->command;
+		return $this->testable;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getOriginal()
+	{
+		return $this->original;
 	}
 }

@@ -1,0 +1,13 @@
+<?php
+
+namespace ${{namespace}};
+
+class ${{class}} extends ${{extends}}
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = '${{signature}}';
+}

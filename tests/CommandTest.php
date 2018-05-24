@@ -5,14 +5,24 @@ namespace Railken\LaraCommandTest\Tests;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use Railken\LaraCommandTest\CommandContainer;
+use Railken\LaraCommandTest\GeneratorCommandTestable;
 
 class CommandTest extends BaseTest
 {
     public function testConfirm()
     {
-        Artisan::call((new CommandContainer(Laravel\DummyCommand::class))->withInput([
+
+    	$generator = new GeneratorCommandTestable(__DIR__ . "/../var/cache");
+    	$generator->fromCommand(Laravel\DummyCommand::class);
+    	$generator->withInput([
         	'yes'
-        ])->handle());
+        ]);
+        $command = $generator->generate();
+
+        \Illuminate\Console\Application::starting(function ($artisan) use ($command) {
+            $artisan->resolveCommands([$command->getTestable()]);
+        });
+
+        Artisan::call($command->getTestable());
     }
 }
