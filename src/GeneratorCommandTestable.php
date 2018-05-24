@@ -3,6 +3,7 @@
 namespace Railken\LaraCommandTest;
 
 use Roave\BetterReflection\BetterReflection;
+use Illuminate\Support\Collection;
 
 class GeneratorCommandTestable
 {	
@@ -24,9 +25,9 @@ class GeneratorCommandTestable
 	/**
 	 * @param string $root
 	 */
-	public function __construct(string $root)
+	public function __construct(string $root = null)
 	{
-		$this->root = $root;
+		$this->root = $root ? $root : sys_get_temp_dir();
 	}
 
 	/**
@@ -72,9 +73,13 @@ class GeneratorCommandTestable
 			mkdir(dirname($destination), 0755, true);
 		}
 
+		$input = (new Collection($this->input))->map(function($input) {
+			return "'".$input."'";
+		})->implode(",");
+
 		$content = str_replace(
-		    ['${{namespace}}', '${{class}}', '${{signature}}', '${{extends}}'],
-		    [$namespace, $class, $signature, "\\".$command],
+		    ['${{namespace}}', '${{class}}', '${{signature}}', '${{extends}}', '${{input}}'],
+		    [$namespace, $class, $signature, "\\".$command, $input],
 		    file_get_contents(__DIR__ ."/stubs/CommandTestable.php.stub")
 		);
 

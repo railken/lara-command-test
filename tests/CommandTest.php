@@ -23,6 +23,8 @@ class CommandTest extends BaseTest
             $artisan->resolveCommands([$command->getTestable()]);
         });
 
-        Artisan::call($command->getTestable());
+        $result = Artisan::call($command->getTestable());
+
+        $this->assertEquals(1, $result);
     }
 }

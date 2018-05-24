@@ -10,4 +10,43 @@ class ${{class}} extends ${{extends}}
      * @var string
      */
     protected $signature = '${{signature}}';
+
+    protected $testableCounter = 0;
+    protected $testableInput = [${{input}}];
+
+    /**
+     * Confirm a question with the user.
+     *
+     * @param  string  $question
+     * @param  bool    $default
+     * @return bool
+     */
+    public function confirm($question, $default = false)
+    {
+
+    	if ($input = $this->getTestableInput($question, $default)) {
+    		return $input;
+    	}
+
+        return $this->output->confirm($question, $default);
+    }
+
+    /**
+     *
+     * @param  string  $question
+     * @param  bool    $default
+     * @return mixed
+     */
+    public function getTestableInput($question, $default = false)
+    {
+    	$counter = $this->testableCounter;
+
+    	$testableInput = isset($this->testableInput[$counter]) ? $this->testableInput[$counter] : null;
+
+    	if ($testableInput) {
+    		$this->testableCounter++;
+    	}
+
+    	return $testableInput;
+    }
 }

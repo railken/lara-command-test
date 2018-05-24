@@ -22,6 +22,10 @@ class DummyCommand extends Command
     {
         if ($this->confirm("Should we go?")) {
             $this->info("All go");
+
+            return 1;
         }
+
+        return 0;
     }
 }
