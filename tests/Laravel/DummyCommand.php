@@ -21,9 +21,12 @@ class DummyCommand extends Command
     public function handle()
     {
         if ($this->confirm("Should we go?")) {
-            $this->info("All go");
 
-            return 1;
+            $response = $this->ask('Is it hello?');
+
+            print_r($response);
+            
+            return $response === 'Hello' ? 1 : 0;
         }
 
         return 0;

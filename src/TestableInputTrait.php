@@ -3,45 +3,73 @@
 namespace Railken\LaraCommandTest;
 
 trait TestableInputTrait
-{	
-	/**
-	 * @var int
-	 */
+{
+    /**
+     * @var int
+     */
     protected $testableCounter = 0;
 
     /**
-     * Confirm a question with the user.
-     *
-     * @param  string  $question
-     * @param  bool    $default
-     * @return bool
+     * @parent
      */
     public function confirm($question, $default = false)
     {
+        if (($input = $this->getTestableInput()) !== null) {
+            return true;
+        }
 
-    	if ($input = $this->getTestableInput($question, $default)) {
-    		return $input;
-    	}
-
-        return $this->output->confirm($question, $default);
+        return parent::confirm($question, $default);
     }
 
     /**
-     *
-     * @param  string  $question
-     * @param  bool    $default
+     * @parent
+     */
+    public function ask($question, $default = null)
+    {
+        if (($input = $this->getTestableInput()) !== null) {
+            return $input;
+        }
+
+        return parent::ask($question, $default);
+    }
+
+    /**
+     * @parent
+     */
+    public function askWithCompletion($question, array $choices, $default = null)
+    {
+        if (($input = $this->getTestableInput()) !== null) {
+            return $input;
+        }
+
+        return parent::askWithCompletion($question, $choices, $default);
+    }
+
+    /**
+     * @parent
+     */
+    public function secret($question, $fallback = true)
+    {
+        if (($input = $this->getTestableInput()) !== null) {
+            return $input;
+        }
+
+        return parent::secret($question, $fallback);
+    }
+
+    /**
      * @return mixed
      */
-    public function getTestableInput($question, $default = false)
+    public function getTestableInput()
     {
-    	$counter = $this->testableCounter;
+        $counter = $this->testableCounter;
 
-    	$testableInput = isset($this->testableInput[$counter]) ? $this->testableInput[$counter] : null;
+        $testableInput = isset($this->testableInput[$counter]) ? $this->testableInput[$counter] : null;
 
-    	if ($testableInput) {
-    		$this->testableCounter++;
-    	}
+        if ($testableInput !== null) {
+            $this->testableCounter++;
+        }
 
-    	return $testableInput;
+        return $testableInput;
     }
 }

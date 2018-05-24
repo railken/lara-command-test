@@ -6,16 +6,17 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Railken\LaraCommandTest\GeneratorCommandTestable;
+use Railken\LaraCommandTest\Helper;
 
 class CommandTest extends BaseTest
 {
-    public function testConfirm()
+    public function testGenerator()
     {
-
-    	$generator = new GeneratorCommandTestable(__DIR__ . "/../var/cache");
-    	$generator->fromCommand(Laravel\DummyCommand::class);
-    	$generator->withInput([
-        	'yes'
+        $generator = new GeneratorCommandTestable(__DIR__ . "/../var/cache");
+        $generator->fromCommand(Laravel\DummyCommand::class);
+        $generator->withInput([
+            'yes',
+            'Hello'
         ]);
         $command = $generator->generate();
 
@@ -24,7 +25,29 @@ class CommandTest extends BaseTest
         });
 
         $result = Artisan::call($command->getTestable());
+        
+        $this->assertEquals(1, $result);
+    }
 
+    public function testHelper1()
+    {
+        $helper = new Helper(__DIR__ . "/../var/cache");
+        $result = $helper->call(Laravel\DummyCommand::class, [], [
+            'yes',
+            'Hello'
+        ]);
+        
+        $this->assertEquals(1, $result);
+    }
+
+    public function testHelper2()
+    {
+        $helper = new Helper(__DIR__ . "/../var/cache");
+        $result = $helper->call(Laravel\DummyCommand::class, [], [
+            'yes',
+            'Hello'
+        ]);
+        
         $this->assertEquals(1, $result);
     }
 }
