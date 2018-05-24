@@ -2,7 +2,6 @@
 
 namespace Railken\LaraCommandTest;
 
-use Roave\BetterReflection\BetterReflection;
 use Illuminate\Support\Collection;
 
 class GeneratorCommandTestable
