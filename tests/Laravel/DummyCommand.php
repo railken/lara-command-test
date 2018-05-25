@@ -23,8 +23,6 @@ class DummyCommand extends Command
         if ($this->confirm("Should we go?")) {
 
             $response = $this->ask('Is it hello?');
-
-            print_r($response);
             
             return $response === 'Hello' ? 1 : 0;
         }

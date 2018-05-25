@@ -3,6 +3,7 @@
 namespace Railken\LaraCommandTest;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class GeneratorCommandTestable
 {
@@ -28,6 +29,31 @@ class GeneratorCommandTestable
     public function __construct(string $root = null)
     {
         $this->root = $root ? $root : sys_get_temp_dir();
+        $this->root .= "/tmp";
+        $this->cleanupRoot();
+    }
+
+    /**
+     * Cleanup root
+     */
+    public function cleanupRoot() 
+    {
+        $path = $this->root;
+
+        $it = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($path),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($it as $file) {
+            if (in_array($file->getBasename(), array('.', '..'))) {
+                continue;
+            } elseif ($file->isDir()) {
+                rmdir($file->getPathname());
+            } elseif ($file->isFile() || $file->isLink()) {
+                unlink($file->getPathname());
+            }
+        }
+        rmdir($path);
     }
 
     /**
