@@ -1,6 +1,6 @@
 # lara-command-test
 
-[![Build Status](https://travis-ci.org/railken/lara-command-test-prompt.svg?branch=master)](https://travis-ci.org/railken/lara-command-test-prompt)
+[![Build Status](https://travis-ci.org/railken/lara-command-test.svg?branch=master)](https://travis-ci.org/railken/lara-command-test)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A laravel package to call commands that have prompt inputs 
@@ -35,7 +35,6 @@ class DummyCommand extends Command
 
 
 ```php
-
 use Railken\LaraCommandTest\Helper;
 
 $helper = new Helper(__DIR__ . "/../var/cache");
