@@ -22,15 +22,14 @@ class Helper
     }
 
     /**
-     * Call a console command.
+     * Generate and register a console command.
      *
      * @param string  $command
-     * @param array   $arguments
      * @param array   $input
      *
-     * @return int
+     * @return CommandContainer
      */
-    public function call($command, array $arguments = [], array $input = [])
+    public function generate($command, array $input = [])
     {
         $generator = $this->generator;
         $generator->fromCommand($command);
@@ -41,6 +40,18 @@ class Helper
             $artisan->resolveCommands([$command->getTestable()]);
         });
 
+        return $command;
+    }
+
+    /**
+     * Call a console command.
+     *
+     * @param CommandContainer  $command
+     *
+     * @return int
+     */
+    public function call($command, array $arguments = [])
+    {
         return Artisan::call($command->getTestable());
     }
 }

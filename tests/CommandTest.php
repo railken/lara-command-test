@@ -32,10 +32,11 @@ class CommandTest extends BaseTest
     public function testHelper1()
     {
         $helper = new Helper(__DIR__ . "/../var/cache");
-        $result = $helper->call(Laravel\DummyCommand::class, [], [
+        $command = $helper->generate(Laravel\DummyCommand::class, [
             'yes',
             'Hello'
         ]);
+        $result = $helper->call($command, []);
         
         $this->assertEquals(1, $result);
     }
@@ -43,10 +44,11 @@ class CommandTest extends BaseTest
     public function testHelper2()
     {
         $helper = new Helper(__DIR__ . "/../var/cache");
-        $result = $helper->call(Laravel\DummyCommand::class, [], [
+        $command = $helper->generate(Laravel\DummyCommand::class, [
             'yes',
             'Hello'
         ]);
+        $result = $helper->call($command, []);
         
         $this->assertEquals(1, $result);
     }

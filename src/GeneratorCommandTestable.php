@@ -130,7 +130,7 @@ class GeneratorCommandTestable
 
         $namespace = str_replace("/", "\\", dirname($file));
         $class = basename($file) . "Testable" . $version;
-        $signature = "testable";
+        $signature = "testable:" . basename($file) . ":" . $version;
 
         if (!file_exists(dirname($destination))) {
             mkdir(dirname($destination), 0755, true);
