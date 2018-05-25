@@ -11,7 +11,7 @@ class Helper
     /**
      * @var GeneratorCommandTestable
      */
-    protected $root;
+    protected $generator;
 
     /**
      * @param string $root
