@@ -40,6 +40,10 @@ class GeneratorCommandTestable
     {
         $path = $this->root;
 
+        if (!file_exists($path)) {
+            return;
+        }
+
         $it = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($path),
             \RecursiveIteratorIterator::CHILD_FIRST
